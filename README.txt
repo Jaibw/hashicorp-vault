@@ -63,4 +63,8 @@ vault operator unseal                          # paster key3
 vault login #Initial_Root_Token#
 
 
-
+### Reset Consul - Don't run it in production 
+# consul kv delete -recurse vault/
+# sudo systemctl restart vault 
+# vault operator init 
+#############################################
