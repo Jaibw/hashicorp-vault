@@ -54,8 +54,13 @@ sudo systemctl status vault                       # press q to exit
 
 Try to open http://PublicIPs
 
-
-
+export VAULT_ADDR=http://PublicIPs
+echo "export VAULT_ADDR=http://PublicIPs" >> ~/.bashrc 
+vault operator init                            # copy and save the output 
+vault operator unseal                          # paster key1 
+vault operator unseal                          # paster key2
+vault operator unseal                          # paster key3
+vault login s.VDn3tVTxs3uY5DRzddUsFRRm
 
 
 
