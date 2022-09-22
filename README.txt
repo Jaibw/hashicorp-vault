@@ -76,7 +76,7 @@ vault secrets enable -path=app001 kv
 vault secrets enable -path=app002 kv
 vault secrets list 
 vault kv put app001/dbname name=db_app001
-vault kb get app001/dbname
+vault kv get app001/dbname
 # create app004 from web interface with api-config key 
 vault kv get app004/api-config
 vault kv delete app004/api-config
