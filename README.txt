@@ -8,3 +8,8 @@ ls
 sudo mv vault /usr/bin
 vault -h 
 vault -version
+
+
+## Install on Windows 
+Open the powershell and run: 
+wget https://releases.hashicorp.com/vault/1.5.0/vault_1.5.0_windows_amd64.zip 
