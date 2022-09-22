@@ -52,6 +52,8 @@ sudo systemctl enable vault
 sudo systemctl status consul                      # press q to exit 
 sudo systemctl status vault                       # press q to exit 
 
+Try to open http://PublicIPs
+
 
 
 
