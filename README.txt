@@ -60,7 +60,7 @@ vault operator init                            # copy and save the output
 vault operator unseal                          # paster key1 
 vault operator unseal                          # paster key2
 vault operator unseal                          # paster key3
-vault login s.VDn3tVTxs3uY5DRzddUsFRRm
+vault login #Initial_Root_Token#
 
 
 
