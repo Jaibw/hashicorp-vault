@@ -210,7 +210,6 @@ curl --location --request GET "$VAULTIP/v1/project06/data/db?version=3" --header
 
 mysql-server > sudo apt update 
 mysql-server > sudo apt install mariadb-server mariadb-client net-tools -y 
-mysql-server > sudo systemctl start mariadb-service 
 mysql-server > sudo systemctl start mariadb
 mysql-server > sudo systemctl status mariadb
 mysql-server > sudo systemctl enable mariadb
