@@ -159,3 +159,12 @@ cat payload.json
 curl --location --request POST "$VAULTIP/v1/project01/database" --header "Authorization: Bearer $VAULTTOKEN" --header 'Content-Type: application/json' --data @payload.json
 
 curl --location --request GET "$VAULTIP/v1/project01/database" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data'
+
+
+
+vault secrets enable aws
+
+vault write aws/config/root \
+    access_key=############### \
+    secret_key=############################################ \
+    region=us-east-1
