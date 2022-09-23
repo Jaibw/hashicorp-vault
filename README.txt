@@ -202,3 +202,24 @@ export VAULTTOKEN=s.############################
 curl --location --request GET "$VAULTIP/v1/project06/data/db?version=1" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data.data'
 curl --location --request GET "$VAULTIP/v1/project06/data/db?version=2" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data.data'
 curl --location --request GET "$VAULTIP/v1/project06/data/db?version=3" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data.data'
+
+
+
+## MySQL - Vault Integration 
+# We have three machines 1. mysql server, 2. mysql-client, 3. vault-server 
+
+mysql-server > sudo apt update 
+mysql-server > sudo apt install mariadb-server mariadb-client net-tools -y 
+mysql-server > sudo systemctl start mariadb-service 
+mysql-server > sudo systemctl start mariadb
+mysql-server > sudo systemctl status mariadb
+mysql-server > sudo systemctl enable mariadb
+mysql-server > sudo mysql_secure_installation   ## accept the default options 
+mysql-server > sudo mysql -u root -p            ## enter the password that was set in last command 
+mysql-server > sudo cat /etc/mysql/mariadb.conf.d/50-server.cnf  | grep 127
+mysql-server > sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+mysql-server > sudo systemctl restart mariadb.service
+mysql-server > sudo netstat -anp | grep 3306
+mysql-server > wget https://raw.githubusercontent.com/Jaibw/hashicorp-vault/master/mysql/init.sql
+mysql-server > sudo mysql -u root -p < init.sql 
+
