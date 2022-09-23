@@ -124,3 +124,38 @@ vault write auth/github/map/teams/development value=dev-policy
 vault write auth/github/map/users/jaibw value=dev-policy
 vault auth list
 ## Open Vault Web interface with GitHub and try with shared token on notepad 
+
+sudo apt install jq 
+export VAULTIP=###.###.###.###
+export VAULTTOKEN=s.###########
+
+vault secrets disable project01
+vault secrets enable -path=project01 kv
+vault kv put project01/database db=127.0.0.1
+
+curl --location --request GET "$VAULTIP/v1/project01/database" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data'
+
+curl --location --request POST "$VAULTIP/v1/project01/database" --header "Authorization: Bearer $VAULTTOKEN"  --header 'Content-Type: application/json' --data-raw '{
+    "dbname": "demo1",
+    "dbuser": "root1",
+    "password": "password1",
+    "dbport": "3306"
+}'
+
+
+curl --location --request GET "$VAULTIP/v1/project01/database" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data'
+
+cat > payload.json <<EOF
+{
+"dbname": "alpha",
+"dbport": "31006",
+"dbuser": "random1",
+"password": "p@ssw0rd"
+}
+EOF
+
+cat payload.json 
+
+curl --location --request POST "$VAULTIP/v1/project01/database" --header "Authorization: Bearer $VAULTTOKEN" --header 'Content-Type: application/json' --data @payload.json
+
+curl --location --request GET "$VAULTIP/v1/project01/database" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data'
