@@ -214,7 +214,7 @@ mysql-server > sudo systemctl start mariadb
 mysql-server > sudo systemctl status mariadb
 mysql-server > sudo systemctl enable mariadb
 mysql-server > sudo mysql_secure_installation   ## accept the default options 
-mysql-server > sudo mysql -u root -p            ## enter the password that was set in last command 
+mysql-server > sudo mysql -u root -p            ## enter the password that was set in last command and type exit 
 mysql-server > sudo cat /etc/mysql/mariadb.conf.d/50-server.cnf  | grep 127
 mysql-server > sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 mysql-server > sudo systemctl restart mariadb.service
