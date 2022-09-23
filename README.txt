@@ -88,6 +88,10 @@ vault secrets disable app002/
 export VAULT_ADDR=http://PublicIPs
 echo "export VAULT_ADDR=http://PublicIPs" >> ~/.bashrc 
 vault login   ## with root token 
+
+vault secrets disable project01
+vault secrets disable project02
+
 vault secrets enable -path=project01 kv 
 vault secrets enable -path=project02 kv 
 
