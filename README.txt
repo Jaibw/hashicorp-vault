@@ -85,3 +85,25 @@ vault secrets disable app001/
 vault secrets disable app002/
 
 
+export VAULT_ADDR=http://PublicIPs
+echo "export VAULT_ADDR=http://PublicIPs" >> ~/.bashrc 
+vault login   ## with root token 
+vault secrets enable -path=project01 kv 
+vault secrets enable -path=project02 kv 
+
+cat > project01-policy.hcl <<EOF
+path "project01/database" {
+    capabilities = ["create", "read"]
+}
+EOF
+
+cat project01-policy.hcl 
+vault policy write project01-policy project01-policy.hcl
+vault token create -policy="project01-policy"
+
+vault login   ## give your new token 
+vault kv put project01/database db=127.0.0.1
+vault kv put project02/database db=127.0.0.1
+
+vault login   ## with root token 
+vault kv put project02/database db=127.0.0.1
