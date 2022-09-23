@@ -111,3 +111,16 @@ vault kv put project02/database db=127.0.0.1
 
 vault login   ## with root token 
 vault kv put project02/database db=127.0.0.1
+
+
+vault login
+vault auth enable userpass
+vault write auth/userpass/users/user01 password=password -policy="project01-policy"
+## Open Vault Web interface with Username and try to login with user01 password
+
+vault auth enable github
+vault write auth/github/config organization=demo-001
+vault write auth/github/map/teams/development value=dev-policy
+vault write auth/github/map/users/jaibw value=dev-policy
+vault auth list
+## Open Vault Web interface with GitHub and try with shared token on notepad 
