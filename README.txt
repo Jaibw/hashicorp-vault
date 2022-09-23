@@ -222,3 +222,23 @@ mysql-server > sudo netstat -anp | grep 3306
 mysql-server > wget https://raw.githubusercontent.com/Jaibw/hashicorp-vault/master/mysql/init.sql
 mysql-server > sudo mysql -u root -p < init.sql 
 
+
+vault-server > vault secrets enable database
+
+vault-server > vault write database/config/ovs plugin_name=mysql-legacy-database-plugin connection_url='{{username}}:{{password}}@tcp(18.234.126.68:3306)/' allowed_roles='ovs' username='vault' password='p@ssw0rd'
+
+vault-server > vault write database/roles/ovs db_name=ovs creation_statements="CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';GRANT SELECT ON ovs.* TO '{{name}}'@'%';" default_ttl="5m" max_ttl="10m"
+
+cat > dbPolicy.hcl <<EOF
+path "database/creds/ovs" {
+  capabilities = ["read"]
+}
+EOF
+
+vault-server > vault policy write dbPolicy dbPolicy.hcl
+vault-server > vault token create -policy=dbPolicy
+
+vault-server > export VAULTIP=###.###.###.###
+vault-server > export VAULTTOKEN=s.###########
+
+vault-server > curl --location --request GET "$VAULTIP/v1/database/creds/ovs" --header "Authorization: Bearer $VAULTTOKEN"
