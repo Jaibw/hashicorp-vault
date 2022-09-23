@@ -185,3 +185,20 @@ vault write aws/roles/my-role \
 EOF
 
 vault read aws/creds/my-role 
+
+
+
+vault secrets enable -version=2 -path=project06  kv
+vault kv put project06/db host=127.0.0.1
+vault kv put project06/db host=192.168.0.1
+vault kv put project06/db host=10.0.0.1
+vault kv get project06/db
+vault kv get -version=2 project06/db
+vault kv get -version=3 project06/db
+vault kv get -version=1 project06/db
+
+export VAULTIP=##.##.##.##
+export VAULTTOKEN=s.############################
+curl --location --request GET "$VAULTIP/v1/project06/data/db?version=1" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data.data'
+curl --location --request GET "$VAULTIP/v1/project06/data/db?version=2" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data.data'
+curl --location --request GET "$VAULTIP/v1/project06/data/db?version=3" --header "Authorization: Bearer $VAULTTOKEN" | jq '.data.data'
